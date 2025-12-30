@@ -14,6 +14,8 @@ function ask() {
         Builtins.exit(0);
       } else if (command === "echo") {
         Builtins.echo(args);
+      } else if (command === "type") {
+        Builtins.type(args.shift() || "");
       } else {
         Builtins.notFound(command);
       }
