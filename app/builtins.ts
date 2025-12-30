@@ -1,3 +1,5 @@
+import { execSync } from "node:child_process";
+
 export const commands = {
   exit: "exit",
   echo: "echo",
@@ -20,10 +22,20 @@ export class Builtins {
     if (!command) {
       return;
     }
+
     if (commands[command as Commands]) {
       console.log(`${command} is a shell builtin`);
       return;
     }
+
+    try {
+      const result = execSync(`which ${command}`).toString().trim();
+      console.log(`${command} is ${result}`);
+      return;
+    } catch (error) {
+      // Just do nothing ATP
+    }
+
     console.log(`${command}: not found`);
   }
 
