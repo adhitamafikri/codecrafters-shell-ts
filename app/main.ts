@@ -5,8 +5,11 @@ const rl = createInterface({
   output: process.stdout,
 });
 
-// TODO: Uncomment the code below to pass the first stage
-rl.question("$ ", (answer) => {
-  console.log(`${answer}: command not found`)
-  rl.close();
-});
+function ask() {
+  rl.question("$ ", (answer) => {
+    console.log(`${answer}: command not found`);
+    ask();
+    // rl.close();
+  });
+}
+ask();
