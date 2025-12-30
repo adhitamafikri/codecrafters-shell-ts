@@ -1,4 +1,5 @@
 import { createInterface } from "readline";
+import { Builtins } from "./builtins";
 
 const rl = createInterface({
   input: process.stdin,
@@ -7,11 +8,22 @@ const rl = createInterface({
 
 function ask() {
   rl.question("$ ", (answer) => {
-    if (answer.toLowerCase() === "exit") {
-      process.exit(0);
+    if (answer.length > 0) {
+      const [command, ...args] = answer.split(" ");
+      if (answer.toLowerCase() === "exit") {
+        Builtins.exit(0);
+      } else if (command === "echo") {
+        Builtins.echo(args);
+      } else {
+        Builtins.notFound(command);
+      }
     }
-    console.log(`${answer}: command not found`);
+
     ask();
   });
 }
-ask();
+
+function main() {
+  ask();
+}
+main();
