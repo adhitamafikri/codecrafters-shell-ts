@@ -1,5 +1,5 @@
 import { createInterface } from "node:readline";
-import { spawn } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { Builtins } from "./builtins";
 
 const rl = createInterface({
@@ -19,13 +19,12 @@ function ask() {
         const newCommand = args.shift();
         Builtins.type(newCommand || "");
       } else {
-        const cps = spawn(`${command}`, args);
-        cps.stdout.on("data", (data: Buffer) => {
-          console.log(data.toString().trim());
-        });
-        cps.on("error", () => {
+        const cps = spawnSync(`${command}`, args);
+        if (cps.error) {
           console.log(`${command}: command not found`);
-        });
+        } else {
+          console.log(cps.stdout.toString().trim())
+        }
       }
     }
 
