@@ -1,4 +1,5 @@
-import { createInterface } from "readline";
+import { createInterface } from "node:readline";
+import { execSync } from "node:child_process";
 import { Builtins } from "./builtins";
 
 const rl = createInterface({
@@ -15,9 +16,19 @@ function ask() {
       } else if (command === "echo") {
         Builtins.echo(args);
       } else if (command === "type") {
-        Builtins.type(args.shift() || "");
+        const newCommand = args.shift();
+        Builtins.type(newCommand || "");
       } else {
-        Builtins.notFound(command);
+        try {
+          const result = execSync(`${command} ${args.join(" ")}`)
+            .toString()
+            .trim();
+          if (result) {
+            console.log(result);
+          }
+        } catch {
+          // just do nothing ATP
+        }
       }
     }
 

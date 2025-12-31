@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 
 export const commands = {
   exit: "exit",
@@ -37,9 +37,5 @@ export class Builtins {
     }
 
     console.log(`${command}: not found`);
-  }
-
-  static notFound(command: string) {
-    console.log(`${command}: command not found`);
   }
 }
