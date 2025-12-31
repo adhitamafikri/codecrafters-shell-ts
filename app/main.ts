@@ -21,7 +21,7 @@ function ask() {
       } else {
         const cps = spawn(`${command}`, args);
         cps.stdout.on("data", (data: Buffer) => {
-          console.log("stdout data", data.toString().trim());
+          console.log(data.toString().trim());
         });
         cps.on("error", () => {
           console.log(`${command}: command not found`);
