@@ -36,6 +36,6 @@ export class Builtins {
       // Just do nothing ATP
     }
 
-    console.log(`${command}: not found`);
+    console.log(`${command}: not found from`);
   }
 }
